@@ -1,5 +1,6 @@
 package com.doris.springbootmall.controller;
 
+import com.doris.springbootmall.constant.ProductCategory;
 import com.doris.springbootmall.dto.ProductRequest;
 import com.doris.springbootmall.model.Product;
 import com.doris.springbootmall.service.ProductService;
@@ -19,8 +20,11 @@ public class ProductController {
 
     //查詢商品列表
     @GetMapping("/products")
-    public  ResponseEntity<List<Product>> getProduct(){
-        List<Product> productList = productService.getProducts();
+    public  ResponseEntity<List<Product>> getProducts(
+            @RequestParam(required = false) ProductCategory category,
+            @RequestParam(required = false) String search
+    ){
+        List<Product> productList = productService.getProducts(category, search);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
